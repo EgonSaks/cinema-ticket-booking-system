@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const Genres = ({ genreIds }) => {
   const [genres, setGenres] = useState([]);
+  const [clickedGenres, setClickedGenres] = useState([]);
 
   const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN || '';
 
@@ -20,6 +21,7 @@ const Genres = ({ genreIds }) => {
         );
         const data = await response.json();
         setGenres(data.genres);
+        setClickedGenres(Array(data.genres.length).fill(false));
       } catch (error) {
         console.error(error);
       }
@@ -33,6 +35,14 @@ const Genres = ({ genreIds }) => {
     return genre ? genre.name : '';
   };
 
+  const handleGenreClick = (index) => {
+    setClickedGenres((prevClickedGenres) => {
+      const newClickedGenres = [...prevClickedGenres];
+      newClickedGenres[index] = !newClickedGenres[index];
+      return newClickedGenres;
+    });
+  };
+
   return (
     <div className='flex flex-wrap mb-2 justify-between'>
       {genreIds &&
@@ -40,7 +50,12 @@ const Genres = ({ genreIds }) => {
         genreIds.map((genreId, index) => (
           <span
             key={index}
-            className='inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2'
+            className={`inline-block ${
+              clickedGenres[index]
+                ? 'bg-red-700'
+                : 'bg-red-500 hover:bg-red-700'
+            } text-white rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 cursor-pointer`}
+            onClick={() => handleGenreClick(index)}
           >
             {getGenreName(genreId)}
           </span>

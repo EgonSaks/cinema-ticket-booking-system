@@ -64,7 +64,7 @@ const MovieList = () => {
       <div className='flex justify-center mt-4'>
         <button
           onClick={handlePrevPage}
-          className={`bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ${
+          className={`bg-red-500 hover:bg-red-700 text-white rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 cursor-pointer ${
             page === 1 ? 'opacity-50 cursor-not-allowed' : ''
           }`}
           disabled={page === 1}
@@ -73,7 +73,7 @@ const MovieList = () => {
         </button>
         <button
           onClick={handleNextPage}
-          className={`bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-4 ${
+          className={`bg-red-500 hover:bg-red-700 text-white rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 cursor-pointer ${
             page === totalPages ? 'opacity-50 cursor-not-allowed' : ''
           }`}
           disabled={page === totalPages}
