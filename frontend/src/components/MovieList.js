@@ -6,8 +6,7 @@ const MovieList = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const API_KEY = process.env.REACT_APP_API_KEY || '';
-
+  const API_KEY = process.env.REACT_APP_ACCESS_TOKEN || '';
   useEffect(() => {
     fetchMovies();
   }, [page]);

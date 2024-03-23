@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; 
 
 const MovieCard = ({ movie }) => {
   const formatDate = (dateString) => {
@@ -10,8 +11,12 @@ const MovieCard = ({ movie }) => {
       .padStart(2, '0')}/${date.getFullYear()}`;
     return formattedDate;
   };
+
   return (
-    <div className='bg-white shadow-md rounded-lg overflow-hidden flex'>
+    <Link
+      to={{ pathname: `/movie/${movie.id}`, state: { movie } }}
+      className='bg-white shadow-md rounded-lg overflow-hidden flex'
+    >
       <div className='relative w-1/2'>
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -36,7 +41,7 @@ const MovieCard = ({ movie }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
