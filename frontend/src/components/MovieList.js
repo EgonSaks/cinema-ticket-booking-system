@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import extractGenreIds from '../utils/extractGenreIds';
+import Genres from './Genre'; // Import Genres component
 import MovieCard from './MovieCard';
 
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [genreIds, setGenreIds] = useState([]);
 
-  const API_KEY = process.env.REACT_APP_ACCESS_TOKEN || '';
+  const ACCESS_TOKE = process.env.REACT_APP_ACCESS_TOKEN || '';
   useEffect(() => {
     fetchMovies();
   }, [page]);
@@ -17,12 +20,12 @@ const MovieList = () => {
         method: 'GET',
         headers: {
           accept: 'application/json',
-          Authorization: `Bearer ${API_KEY}`,
+          Authorization: `Bearer ${ACCESS_TOKE}`,
         },
       };
 
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`,
+        `https://api.themoviedb.org/3/movie/popular?api_key=${ACCESS_TOKE}&language=en-US&page=${page}`,
         options,
       );
       const data = await response.json();
@@ -30,6 +33,9 @@ const MovieList = () => {
       setTotalPages(data.total_pages);
       setMovies(data.results);
       console.log('Movies:', data.results);
+
+      const genreIds = extractGenreIds(data.results);
+      setGenreIds(genreIds);
     } catch (error) {
       console.error('Error fetching movies:', error);
     }
@@ -48,7 +54,8 @@ const MovieList = () => {
   };
 
   return (
-    <div className='container mx-auto px-4 py-8'>
+    <div className='container mx-auto px-4 py-4'>
+      <Genres genreIds={genreIds} />
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
         {movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
