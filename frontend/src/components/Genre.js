@@ -28,7 +28,7 @@ const Genres = ({ genreIds }) => {
     };
 
     fetchGenres();
-  }, []);
+  }, [ACCESS_TOKEN]);
 
   const getGenreName = (genreId) => {
     const genre = genres.find((genre) => genre.id === genreId);
