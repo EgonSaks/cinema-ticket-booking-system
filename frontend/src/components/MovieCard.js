@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const MovieCard = ({ movie }) => {
   const formatDate = (dateString) => {
@@ -10,26 +10,14 @@ const MovieCard = ({ movie }) => {
       .padStart(2, '0')}/${date.getFullYear()}`;
     return formattedDate;
   };
-
-  const [showOverview, setShowOverview] = useState(false);
-
   return (
     <div className='bg-white shadow-md rounded-lg overflow-hidden flex'>
-      <div
-        className='relative w-1/2'
-        onMouseEnter={() => setShowOverview(true)}
-        onMouseLeave={() => setShowOverview(false)}
-      >
+      <div className='relative w-1/2'>
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
           className='w-full h-full object-cover'
         />
-        {showOverview && (
-          <div className='absolute inset-0 bg-midnight-blue opacity-85 flex items-center justify-center p-2'>
-            <p className='text-white text-center text-xs'>{movie.overview}</p>
-          </div>
-        )}
       </div>
       <div className='p-4 flex-1 flex flex-col justify-between'>
         <div>
