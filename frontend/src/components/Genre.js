@@ -43,8 +43,28 @@ const Genres = ({ genreIds }) => {
     });
   };
 
+
+  const genreEmojis = {
+    28: '💥', // Action
+    12: '🏞️', // Adventure
+    16: '📽️', // Animation
+    35: '😂', // Comedy
+    10751: '❤️', // Family
+    14: '🧙‍♂️', // Fantasy
+    9648: '🔍', // Mystery
+    878: '🤖', // Science Fiction
+    18: '🎭', // Drama
+    27: '👻', // Horror
+    53: '😱', // Thriller
+    10402: '🎵', // Music
+    36: '📜', // History
+    10752: '⚔️', // War
+    10749: '💑', // Romance
+    80: '🔫', // Crime
+  };
+
   return (
-    <div className='flex flex-wrap mb-2 justify-between'>
+    <div className='flex flex-wrap m-4 justify-between'>
       {genreIds &&
         genreIds.length > 0 &&
         genreIds.map((genreId, index) => (
@@ -54,10 +74,10 @@ const Genres = ({ genreIds }) => {
               clickedGenres[index]
                 ? 'bg-red-700'
                 : 'bg-red-500 hover:bg-red-700'
-            } text-white rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 cursor-pointer`}
+            } text-white rounded-full px-4 py-1 text-sm font-semibold mr-2 mb-2 cursor-pointer`}
             onClick={() => handleGenreClick(index)}
           >
-            {getGenreName(genreId)}
+            {genreEmojis[genreId]} {getGenreName(genreId)}
           </span>
         ))}
     </div>

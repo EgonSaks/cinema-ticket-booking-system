@@ -5,7 +5,7 @@ export default function Footer() {
 
   return (
     <div>
-      <footer className="mt-8 p-4 border text-center">
+      <footer className="mt-8 p-4 border text-center bg-red-500 text-white container mx-auto rounded">
         &copy; {currentYear} Egon Saks
       </footer>
     </div>
