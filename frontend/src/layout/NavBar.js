@@ -2,12 +2,22 @@ import React from 'react';
 
 export default function NavBar() {
   return (
-    <div className='navbar flex justify-between py-3 border'>
-      <div className='mx-16'>
-        <a className='text-3xl font-bold' href='/'>
-          Cinema 🍿
-        </a>
+    <div>
+      <div className='navbar flex justify-between container mx-auto py-4'>
+        <div className='mx-5'>
+          <a className='text-4xl font-bold' href='/'>
+            Cinema 🍿
+          </a>
+        </div>
+        <div className='mx-5'>
+          <input
+            type='text'
+            placeholder='Search...'
+            className='border-2 border-red-500 px-2 py-1 rounded'
+          />
+        </div>
       </div>
+      <div className="line w-full border-t"></div>
     </div>
   );
 }
