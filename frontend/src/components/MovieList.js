@@ -37,8 +37,6 @@ const MovieList = ({ searchText }) => {
       });
       const data = await response.json();
 
-      console.log(data);
-
       let filteredMovies = data.results;
 
       if (searchText) {
