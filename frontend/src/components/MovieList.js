@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import extractGenreIds from '../utils/extractGenreIds';
-import Genres from './Genre'; // Import Genres component
+import Genres from './Genre';
 import MovieCard from './MovieCard';
 
 const MovieList = () => {
@@ -9,23 +8,26 @@ const MovieList = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [genreIds, setGenreIds] = useState([]);
 
-  const ACCESS_TOKE = process.env.REACT_APP_ACCESS_TOKEN || '';
+  const API_KEY = process.env.REACT_APP_ACCESS_TOKEN || '';
+
   useEffect(() => {
     fetchMovies();
-  }, [page]);
+  }, [page, genreIds]);
 
   const fetchMovies = async () => {
     try {
+      const genreIdsURL =
+        genreIds && genreIds.length > 0 ? genreIds.join(',') : '';
       const options = {
         method: 'GET',
         headers: {
           accept: 'application/json',
-          Authorization: `Bearer ${ACCESS_TOKE}`,
+          Authorization: `Bearer ${API_KEY}`,
         },
       };
 
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${ACCESS_TOKE}&language=en-US&page=${page}`,
+        `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreIdsURL}`,
         options,
       );
       const data = await response.json();
@@ -33,9 +35,6 @@ const MovieList = () => {
       setTotalPages(data.total_pages);
       setMovies(data.results);
       console.log('Movies:', data.results);
-
-      const genreIds = extractGenreIds(data.results);
-      setGenreIds(genreIds);
     } catch (error) {
       console.error('Error fetching movies:', error);
     }
@@ -55,7 +54,7 @@ const MovieList = () => {
 
   return (
     <div className='container mx-auto px-4 py-4'>
-      <Genres genreIds={genreIds} />
+      <Genres setGenreIds={setGenreIds} />
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
         {movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const Genres = ({ genreIds }) => {
+const Genres = ({ setGenreIds }) => {
   const [genres, setGenres] = useState([]);
   const [clickedGenres, setClickedGenres] = useState([]);
 
@@ -20,6 +20,7 @@ const Genres = ({ genreIds }) => {
           },
         );
         const data = await response.json();
+        
         setGenres(data.genres);
         setClickedGenres(Array(data.genres.length).fill(false));
       } catch (error) {
@@ -39,10 +40,16 @@ const Genres = ({ genreIds }) => {
     setClickedGenres((prevClickedGenres) => {
       const newClickedGenres = [...prevClickedGenres];
       newClickedGenres[index] = !newClickedGenres[index];
+      console.log('Clicked genres:', newClickedGenres);
+
+      const updatedGenreIds = newClickedGenres
+        .map((clicked, index) => (clicked ? genres[index].id : null))
+        .filter((id) => id !== null);
+      setGenreIds(updatedGenreIds);
+
       return newClickedGenres;
     });
   };
-
 
   const genreEmojis = {
     28: '💥', // Action
@@ -65,21 +72,17 @@ const Genres = ({ genreIds }) => {
 
   return (
     <div className='flex flex-wrap m-4 justify-between'>
-      {genreIds &&
-        genreIds.length > 0 &&
-        genreIds.map((genreId, index) => (
-          <span
-            key={index}
-            className={`inline-block ${
-              clickedGenres[index]
-                ? 'bg-red-700'
-                : 'bg-red-500 hover:bg-red-700'
-            } text-white rounded-full px-4 py-1 text-sm font-semibold mr-2 mb-2 cursor-pointer`}
-            onClick={() => handleGenreClick(index)}
-          >
-            {genreEmojis[genreId]} {getGenreName(genreId)}
-          </span>
-        ))}
+      {genres.map((genre, index) => (
+        <span
+          key={index}
+          className={`inline-block ${
+            clickedGenres[index] ? 'bg-red-700' : 'bg-red-500 hover:bg-red-700'
+          } text-white rounded-full px-4 py-1 text-sm font-semibold mr-2 mb-2 cursor-pointer`}
+          onClick={() => handleGenreClick(index)}
+        >
+          {genreEmojis[genre.id]} {genre.name}
+        </span>
+      ))}
     </div>
   );
 };
