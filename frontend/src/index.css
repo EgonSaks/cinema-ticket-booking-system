@@ -1,6 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css?family=Exo+2&display=swap');
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -18,4 +25,128 @@ code {
 
 .bg-midnight-blue {
   background-color: rgb(14, 26, 49);
+}
+
+.CinemaPlan {
+  text-align: center;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.Movies {
+  margin-bottom: 24px;
+}
+
+
+.ShowCase {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+.ShowCase li {
+  margin: 0 12px;
+}
+
+.Cinema {
+  margin-bottom: 18px;
+  perspective: 400px;
+
+  display: grid;
+  place-items: center;
+  grid-gap: 24px;
+}
+
+.Cinema .screen {
+  height: 80px;
+  background: white;
+  width: 100%;
+  transform: rotateX(-30deg) scale(1.2);
+  box-shadow: 0 3px 10px 2px;
+}
+
+.Cinema .seats {
+  display: grid;
+  grid-gap: 6px;
+  grid-template-columns: repeat(8, min-content);
+  align-items: center;
+}
+
+.Cinema .seats .seat:nth-of-type(8n + 2) {
+  margin-right: 12px;
+}
+
+.Cinema .seats .seat:nth-of-type(8n + 6) {
+  margin-right: 12px;
+}
+
+.Cinema .seats .seat:not(.occupied):hover,
+.Cinema .seats .seat:not(.occupied):focus {
+  cursor: pointer;
+  background: ##95CB18;
+  transform: scale(1.2);
+}
+
+.Cinema .seats .seat.selected::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  background: transparent;
+  border: 1px solid #2ECC71;
+  animation: show-off 0.8s;
+  visibility: hidden;
+}
+
+@keyframes show-off {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.seat {
+  display: inline-block;
+  background: #FFCE20;
+  width: 16px;
+  height: 12px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+
+  position: relative;
+  top: 1px;
+}
+
+.seat.selected {
+  background: #2ECC71 !important;
+}
+
+.seat.occupied {
+  background: #FF3A1E;
+}
+
+.info .count {
+  color: #2ECC71;
+}
+
+.info .total {
+  color: #2ECC71;
+}
+
+.info .selected-seats {
+  color: #2ECC71;
 }

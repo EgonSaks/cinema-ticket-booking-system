@@ -9,7 +9,7 @@ const MovieList = ({ searchText }) => {
   const [totalPages, setTotalPages] = useState(1);
   const [genreIds, setGenreIds] = useState([]);
 
-  const API_KEY = process.env.REACT_APP_ACCESS_TOKEN || '';
+  const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN || '';
 
   useEffect(() => {
     fetchMovies();
@@ -19,12 +19,12 @@ const MovieList = ({ searchText }) => {
     let url;
 
     if (searchText) {
-      url = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(
+      url = `https://api.themoviedb.org/3/search/multi?api_key=${ACCESS_TOKEN}&language=en-US&query=${encodeURIComponent(
         searchText,
       )}&page=${page}&include_adult=false`;
     } else {
       const genreIdsURL = genreIds.length > 0 ? genreIds.join(',') : '';
-      url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreIdsURL}`;
+      url = `https://api.themoviedb.org/3/discover/movie?api_key=${ACCESS_TOKEN}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreIdsURL}`;
     }
 
     try {
@@ -32,7 +32,7 @@ const MovieList = ({ searchText }) => {
         method: 'GET',
         headers: {
           accept: 'application/json',
-          Authorization: `Bearer ${API_KEY}`,
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
         },
       });
       const data = await response.json();
