@@ -37,11 +37,17 @@ const MovieList = ({ searchText }) => {
       });
       const data = await response.json();
 
+      console.log(data);
+
       let filteredMovies = data.results;
 
       if (searchText) {
         filteredMovies = filterValidMovies(data.results);
       }
+
+      filteredMovies = filteredMovies.filter(
+        (movie) => movie.backdrop_path !== null,
+      );
 
       setTotalPages(data.total_pages);
       setMovies(filteredMovies);
