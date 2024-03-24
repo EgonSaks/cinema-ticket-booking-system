@@ -17,7 +17,6 @@ export default function NavBar() {
           />
         </div>
       </div>
-      {/* <div className="line w-full border-t"></div> */}
     </div>
   );
 }

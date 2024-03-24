@@ -37,7 +37,6 @@ const Genres = ({ setGenreIds }) => {
     setClickedGenres((prevClickedGenres) => {
       const newClickedGenres = [...prevClickedGenres];
       newClickedGenres[index] = !newClickedGenres[index];
-      console.log('Clicked genres:', newClickedGenres);
 
       const updatedGenreIds = newClickedGenres
         .map((clicked, index) => (clicked ? genres[index].id : null))
@@ -74,7 +73,7 @@ const Genres = ({ setGenreIds }) => {
           key={index}
           className={`inline-block ${
             clickedGenres[index] ? 'bg-red-700' : 'bg-red-500 hover:bg-red-700'
-          } text-white rounded-full px-4 py-1 text-sm font-semibold mr-2 mb-2 cursor-pointer`}
+          } text-white rounded px-3 py-1 text-sm font-semibold mr-2 mb-2 cursor-pointer`}
           onClick={() => handleGenreClick(index)}
         >
           {genreEmojis[genre.id]} {genre.name}
