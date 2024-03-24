@@ -1,10 +1,12 @@
 import React from 'react';
 import MovieList from '../components/MovieList';
 
-export default function Home() {
+function Home({ searchText }) {
   return (
     <div>
-      <MovieList />
+      <MovieList searchText={searchText} />
     </div>
   );
 }
+
+export default Home;

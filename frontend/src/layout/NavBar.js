@@ -1,6 +1,7 @@
 import React from 'react';
+import Search from '../components/Search';
 
-export default function NavBar() {
+function NavBar({ onSearch }) {
   return (
     <div>
       <div className='navbar flex flex-col lg:flex-row justify-between container mx-auto py-4 bg-red-500 rounded'>
@@ -12,14 +13,10 @@ export default function NavBar() {
             Cinema 🍿
           </a>
         </div>
-        <div className='mx-5'>
-          <input
-            type='text'
-            placeholder='Search...'
-            className='border-2 border-red-500 px-2 py-1 rounded'
-          />
-        </div>
+        <Search onSearch={onSearch} />
       </div>
     </div>
   );
 }
+
+export default NavBar;
