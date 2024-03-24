@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import removeUnwantedGenres from '../utils/removeNonCinemaGenres';
 
 const Genres = ({ setGenreIds }) => {
   const [genres, setGenres] = useState([]);
@@ -20,9 +21,10 @@ const Genres = ({ setGenreIds }) => {
           },
         );
         const data = await response.json();
-        
-        setGenres(data.genres);
-        setClickedGenres(Array(data.genres.length).fill(false));
+        const filteredGenres = removeUnwantedGenres(data.genres);
+
+        setGenres(filteredGenres);
+        setClickedGenres(Array(filteredGenres.length).fill(false));
       } catch (error) {
         console.error(error);
       }
@@ -30,11 +32,6 @@ const Genres = ({ setGenreIds }) => {
 
     fetchGenres();
   }, [ACCESS_TOKEN]);
-
-  const getGenreName = (genreId) => {
-    const genre = genres.find((genre) => genre.id === genreId);
-    return genre ? genre.name : '';
-  };
 
   const handleGenreClick = (index) => {
     setClickedGenres((prevClickedGenres) => {
