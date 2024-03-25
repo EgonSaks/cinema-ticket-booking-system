@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import Search from '../components/Search';
+import React, { useEffect, useState } from 'react';
 import LoginForm from '../components/LoginForm';
 import RegistrationForm from '../components/RegistrationForm';
+import Search from '../components/Search';
 
 function NavBar({ onSearch }) {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -24,7 +24,10 @@ function NavBar({ onSearch }) {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if ((showLoginForm || showRegistrationForm) && !event.target.closest('.popup')) {
+      if (
+        (showLoginForm || showRegistrationForm) &&
+        !event.target.closest('.popup')
+      ) {
         handleCloseForms();
       }
     };
@@ -47,27 +50,33 @@ function NavBar({ onSearch }) {
             Cinema 🍿
           </a>
         </div>
-        <div className="flex-grow lg:flex lg:justify-end items-center">
+        <div className='flex-grow lg:flex lg:justify-end items-center'>
           <Search onSearch={onSearch} />
-          <button 
-            className={`bg-white text-red-500 hover:text-white hover:bg-red-700 rounded px-3 py-1 text-sm font-semibold mr-5 cursor-pointer h-9`} 
-            onClick={handleLoginButtonClick} 
-          >
-            Login
-          </button>
-          <button 
-            className={`bg-white text-red-500 hover:text-white hover:bg-red-700 rounded px-3 py-1 text-sm font-semibold mr-5 cursor-pointer h-9`} 
-            onClick={handleRegistrationButtonClick} 
-          >
-            Register
-          </button>
+        </div>
+        <div className='flex flex-col lg:flex-row justify-center items-center mr-5'>
+          <div className='lg:flex lg:justify-center min-[200px]:space-x-8 sm:space-x-8 lg:space-x-4'>
+            <button
+              className={`bg-white text-red-500 hover:text-white hover:bg-red-700 rounded px-3 py-1 text-sm font-semibold cursor-pointer h-9`}
+              onClick={handleLoginButtonClick}
+            >
+              Login
+            </button>
+            <button
+              className={`bg-white text-red-500 hover:text-white hover:bg-red-700 rounded px-3 py-1 text-sm font-semibold cursor-pointer h-9`}
+              onClick={handleRegistrationButtonClick}
+            >
+              Register
+            </button>
+          </div>
         </div>
       </div>
       {(showLoginForm || showRegistrationForm) && (
-        <div className="fixed inset-0 flex justify-center items-center z-50 bg-gray-900 bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg popup">
+        <div className='fixed inset-0 flex justify-center items-center z-50 bg-gray-900 bg-opacity-50'>
+          <div className='bg-white p-6 rounded-lg popup'>
             {showLoginForm && <LoginForm onClose={handleCloseForms} />}
-            {showRegistrationForm && <RegistrationForm onClose={handleCloseForms} />}
+            {showRegistrationForm && (
+              <RegistrationForm onClose={handleCloseForms} />
+            )}
           </div>
         </div>
       )}

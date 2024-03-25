@@ -37,14 +37,13 @@ function RegistrationForm({ onClose }) {
         <div className='mb-4'>
           <label
             htmlFor='name'
-            className='block text-gray-700 text-sm font-bold mb-2'
-          >
-            Name:
-          </label>
+            className='block text-gray-700 text-sm mb-2'
+          ></label>
           <input
             type='text'
             id='name'
             name='name'
+            placeholder='Name'
             value={formData.name}
             onChange={handleChange}
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
@@ -54,14 +53,13 @@ function RegistrationForm({ onClose }) {
         <div className='mb-4'>
           <label
             htmlFor='surname'
-            className='block text-gray-700 text-sm font-bold mb-2'
-          >
-            Surname:
-          </label>
+            className='block text-gray-700 text-sm mb-2'
+          ></label>
           <input
             type='text'
             id='surname'
             name='surname'
+            placeholder='Surname'
             value={formData.surname}
             onChange={handleChange}
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
@@ -71,14 +69,13 @@ function RegistrationForm({ onClose }) {
         <div className='mb-4'>
           <label
             htmlFor='email'
-            className='block text-gray-700 text-sm font-bold mb-2'
-          >
-            Email Address:
-          </label>
+            className='block text-gray-700 text-sm mb-2'
+          ></label>
           <input
             type='email'
             id='email'
             name='email'
+            placeholder='Email Address'
             value={formData.email}
             onChange={handleChange}
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
@@ -87,32 +84,14 @@ function RegistrationForm({ onClose }) {
         </div>
         <div className='mb-4'>
           <label
-            htmlFor='phone'
-            className='block text-gray-700 text-sm font-bold mb-2'
-          >
-            Phone:
-          </label>
-          <input
-            type='text'
-            id='phone'
-            name='phone'
-            value={formData.phone}
-            onChange={handleChange}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-            required
-          />
-        </div>
-        <div className='mb-4'>
-          <label
             htmlFor='password'
-            className='block text-gray-700 text-sm font-bold mb-2'
-          >
-            Password:
-          </label>
+            className='block text-gray-700 text-sm mb-2'
+          ></label>
           <input
             type='password'
             id='password'
             name='password'
+            placeholder='Password'
             value={formData.password}
             onChange={handleChange}
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
@@ -122,9 +101,9 @@ function RegistrationForm({ onClose }) {
         <div className='mb-4'>
           <label
             htmlFor='dob'
-            className='block text-gray-700 text-sm font-bold mb-2'
+            className='block text-gray-700 text-sm mb-2 text-left'
           >
-            Date of Birth:
+            Date of Birth
           </label>
           <input
             type='date'
@@ -139,7 +118,7 @@ function RegistrationForm({ onClose }) {
         <div className='text-center'>
           <button
             type='submit'
-            className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+            className='bg-red-500 hover:bg-red-700 w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
           >
             Join
           </button>

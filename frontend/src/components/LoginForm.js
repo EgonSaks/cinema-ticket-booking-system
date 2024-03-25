@@ -29,14 +29,13 @@ function LoginForm({ onClose }) {
         <div className='mb-4'>
           <label
             htmlFor='email'
-            className='block text-gray-700 text-sm font-bold mb-2'
-          >
-            Email Address:
-          </label>
+            className='block text-gray-700 text-sm  mb-2'
+          ></label>
           <input
             type='email'
             id='email'
             name='email'
+            placeholder='Email Address'
             value={formData.email}
             onChange={handleChange}
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
@@ -46,14 +45,13 @@ function LoginForm({ onClose }) {
         <div className='mb-4'>
           <label
             htmlFor='password'
-            className='block text-gray-700 text-sm font-bold mb-2'
-          >
-            Password:
-          </label>
+            className='block text-gray-700 text-sm  mb-2'
+          ></label>
           <input
             type='password'
             id='password'
             name='password'
+            placeholder='Password'
             value={formData.password}
             onChange={handleChange}
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
@@ -63,7 +61,7 @@ function LoginForm({ onClose }) {
         <div className='text-center'>
           <button
             type='submit'
-            className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+            className='bg-red-500 hover:bg-red-700 w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
           >
             Login
           </button>
