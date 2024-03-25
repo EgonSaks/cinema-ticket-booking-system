@@ -7,7 +7,6 @@ function RegistrationForm({ onClose }) {
     email: '',
     phone: '',
     password: '',
-    dob: '',
   });
 
   const handleChange = (e) => {
@@ -27,7 +26,6 @@ function RegistrationForm({ onClose }) {
       email: '',
       phone: '',
       password: '',
-      dob: '',
     });
   };
 
@@ -93,23 +91,6 @@ function RegistrationForm({ onClose }) {
             name='password'
             placeholder='Password'
             value={formData.password}
-            onChange={handleChange}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-            required
-          />
-        </div>
-        <div className='mb-4'>
-          <label
-            htmlFor='dob'
-            className='block text-gray-700 text-sm mb-2 text-left'
-          >
-            Date of Birth
-          </label>
-          <input
-            type='date'
-            id='dob'
-            name='dob'
-            value={formData.dob}
             onChange={handleChange}
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             required
