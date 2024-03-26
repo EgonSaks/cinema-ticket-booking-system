@@ -13,7 +13,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/api/v1/user")
+    @PostMapping("/api/v1/register")
     User newUser(@RequestBody User newUser){
         return userRepository.save(newUser);
     }

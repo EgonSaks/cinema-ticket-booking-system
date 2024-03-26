@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import Register from '../API/Register';
 function RegistrationForm({ onClose }) {
   const [formData, setFormData] = useState({
     name: '',
@@ -17,16 +17,20 @@ function RegistrationForm({ onClose }) {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    setFormData({
-      name: '',
-      surname: '',
-      email: '',
-      phone: '',
-      password: '',
-    });
+
+    const success = await Register(formData);
+    if (success) {
+      onClose();
+      setFormData({
+        name: '',
+        surname: '',
+        email: '',
+        phone: '',
+        password: '',
+      });
+    }
   };
 
   return (
