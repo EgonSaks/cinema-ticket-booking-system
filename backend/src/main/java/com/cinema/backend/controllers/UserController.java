@@ -1,7 +1,7 @@
 package com.cinema.backend.controller;
 
 import com.cinema.backend.models.User;
-import com.cinema.backend.repository.UserRepository;
+import com.cinema.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
