@@ -1,4 +1,4 @@
-package com.cinema.backend.repository;
+package com.cinema.backend.repositories;
 
 import com.cinema.backend.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;

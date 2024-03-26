@@ -1,4 +1,4 @@
-package com.cinema.backend.controller;
+package com.cinema.backend.controllers;
 
 import com.cinema.backend.models.User;
 import com.cinema.backend.repositories.UserRepository;
@@ -14,8 +14,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @PostMapping("/api/v1/register")
-    User newUser(@RequestBody User newUser){
+    User newUser(@RequestBody User newUser) {
         return userRepository.save(newUser);
     }
-
 }
