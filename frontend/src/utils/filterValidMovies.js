@@ -1,4 +1,4 @@
-const filterValidMovies = (movies) => {
+const FilterValidMovies = (movies) => {
   return movies.filter((movie) => {
     return (
       movie.media_type === 'movie' &&
@@ -10,4 +10,4 @@ const filterValidMovies = (movies) => {
   });
 };
 
-export default filterValidMovies;
+export default FilterValidMovies;

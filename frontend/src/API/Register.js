@@ -1,7 +1,4 @@
-async function Register(formData) {
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
-
-  console.log(BASE_URL);
+async function Register(BASE_URL, formData) {
   try {
     const response = await fetch(`${BASE_URL}/register`, {
       method: 'POST',

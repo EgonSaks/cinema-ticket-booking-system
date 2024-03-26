@@ -1,4 +1,4 @@
-const removeUnwantedGenres = (genres) => {
+const RemoveUnwantedGenres = (genres) => {
   return genres.filter(
     (genre) =>
       genre.name !== 'Documentary' &&
@@ -7,4 +7,4 @@ const removeUnwantedGenres = (genres) => {
   );
 };
 
-export default removeUnwantedGenres;
+export default RemoveUnwantedGenres;

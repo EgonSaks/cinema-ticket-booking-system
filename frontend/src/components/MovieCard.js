@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import formatDate from '../utils/formatDate';
+import FormatDate from '../utils/FormatDate';
 
 const MovieCard = ({ movie }) => {
   return (
@@ -22,7 +22,7 @@ const MovieCard = ({ movie }) => {
         <div className='text-left text-sm'>
           <div>
             <span className='text-gray-500'>
-              Release Date: {formatDate(movie.release_date)}
+              Release Date: {FormatDate(movie.release_date)}
             </span>
           </div>
           <div>

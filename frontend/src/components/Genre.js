@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import removeUnwantedGenres from '../utils/removeNonCinemaGenres';
+import FetchGenres from '../API/GetGenres';
+import RemoveUnwantedGenres from '../utils/RemoveNonCinemaGenres';
 
 const Genres = ({ setGenreIds }) => {
   const [genres, setGenres] = useState([]);
@@ -8,29 +9,14 @@ const Genres = ({ setGenreIds }) => {
   const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN || '';
 
   useEffect(() => {
-    const fetchGenres = async () => {
-      try {
-        const response = await fetch(
-          'https://api.themoviedb.org/3/genre/movie/list?language=en',
-          {
-            method: 'GET',
-            headers: {
-              accept: 'application/json',
-              Authorization: 'Bearer ' + ACCESS_TOKEN,
-            },
-          },
-        );
-        const data = await response.json();
-        const filteredGenres = removeUnwantedGenres(data.genres);
-
-        setGenres(filteredGenres);
-        setClickedGenres(Array(filteredGenres.length).fill(false));
-      } catch (error) {
-        console.error(error);
-      }
+    const fetchData = async () => {
+      const fetchedGenres = await FetchGenres(ACCESS_TOKEN);
+      const filteredGenres = RemoveUnwantedGenres(fetchedGenres);
+      setGenres(filteredGenres);
+      setClickedGenres(Array(filteredGenres.length).fill(false));
     };
 
-    fetchGenres();
+    fetchData();
   }, [ACCESS_TOKEN]);
 
   const handleGenreClick = (index) => {

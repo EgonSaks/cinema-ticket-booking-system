@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Register from '../API/Register';
 function RegistrationForm({ onClose }) {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [formData, setFormData] = useState({
     name: '',
     surname: '',
@@ -20,7 +21,7 @@ function RegistrationForm({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const success = await Register(formData);
+    const success = await Register(BASE_URL, formData);
     if (success) {
       onClose();
       setFormData({

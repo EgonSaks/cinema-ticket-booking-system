@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import FetchMovieDetails from '../API/GetMovieDetails';
 import SeatPlan from '../components/SeatPlan';
-import formatDate from '../utils/formatDate';
-import formatRuntime from '../utils/formatRuntime';
+import FormatDate from '../utils/FormatDate';
+import FormatRuntime from '../utils/FormatRuntime';
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -11,19 +12,12 @@ const MovieDetails = () => {
   const API_KEY = process.env.REACT_APP_API_KEY || '';
 
   useEffect(() => {
-    const fetchMovieDetails = async () => {
-      try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`,
-        );
-        const data = await response.json();
-        setMovie(data);
-      } catch (error) {
-        console.error('Error fetching movie details:', error);
-      }
+    const fetchData = async () => {
+      const movieData = await FetchMovieDetails(id, API_KEY);
+      setMovie(movieData);
     };
 
-    fetchMovieDetails();
+    fetchData();
   }, [id, API_KEY]);
 
   if (!movie) {
@@ -55,13 +49,13 @@ const MovieDetails = () => {
                 <b>Tagline:</b> {movie.tagline}
               </p>
               <p className='text-gray-800 mt-1 text-sm md:text-sm lg:text-base'>
-                <b>Runtime:</b> {formatRuntime(movie.runtime)}
+                <b>Runtime:</b> {FormatRuntime(movie.runtime)}
               </p>
               <p className='text-gray-800 mt-1 text-sm md:text-sm lg:text-base'>
                 <b>Rating:</b> {movie.vote_average.toFixed(1)}
               </p>
               <p className='text-gray-800 mt-2 text-sm md:text-sm lg:text-base'>
-                <b>Release Date:</b> {formatDate(movie.release_date)}
+                <b>Release Date:</b> {FormatDate(movie.release_date)}
               </p>
               <p className='text-gray-800 mt-2 text-sm md:text-sm lg:text-base'>
                 <b>Production Companies:</b>{' '}
