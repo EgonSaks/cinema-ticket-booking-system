@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import SeatSelector from './SeatSelector';
 import SeatShowcase from './SeatShowcase';
+import generateRandomOccupiedSeats from '../utils/GenerateRandomOccupiedSeats';
 
 const movies = [
   {
     title: '',
     price: 10,
-    occupied: [1, 2, 4, 20, 25, 63],
+    occupied: generateRandomOccupiedSeats(1, 64, 64), 
   },
 ];
 
@@ -19,7 +20,7 @@ function SeatPlan() {
     selectedSeatText = selectedSeats.map((seat) => seat + 1).join(', ');
   }
 
-  let totalPrice = selectedSeats.length * movies[0].price; 
+  let totalPrice = selectedSeats.length * movies[0].price;
 
   const isAnySeatSelected = selectedSeats.length > 0;
 
