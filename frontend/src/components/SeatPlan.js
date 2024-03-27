@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import BuyTickets from '../API/BuyTickets';
-import updateOccupiedSeats from '../API/UpdateOccupiedSeats';
+import updateOccupiedSeatsInTheHall from '../API/UpdateOccupiedSeats';
 import generateRandomOccupiedSeats from '../utils/GenerateRandomOccupiedSeats';
 import SeatSelector from './SeatSelector';
 import SeatShowcase from './SeatShowcase';
@@ -68,20 +68,21 @@ function SeatPlan({ movie }) {
         seat: order.seat,
       };
 
-      console.log('Buying tickets:', myOrder);
-
       const hallUpdate = {
         movieId: movie.id,
-        date: new Date().toISOString(),
-        updatedOccupiedSeats,
+        movieSession: new Date().toISOString(),
+        updatedSeats: updatedOccupiedSeats,
       };
 
-      const updateSuccess = await updateOccupiedSeats(BASE_URL, hallUpdate);
+      const updateSuccess = await updateOccupiedSeatsInTheHall(
+        BASE_URL,
+        hallUpdate,
+      );
 
       if (updateSuccess) {
         const buyTickets = await BuyTickets(BASE_URL, myOrder);
         if (buyTickets) {
-          console.log('Tickets bought successfully');
+          return true;
         }
       } else {
         console.error('Failed to update occupied seats in the database');
