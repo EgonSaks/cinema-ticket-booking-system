@@ -93,7 +93,7 @@ const MovieDetails = () => {
           </div>
         </div>
       </div>
-      <SeatPlan />
+      <SeatPlan movie={movie} />
     </div>
   );
 };
