@@ -42,8 +42,7 @@ function SeatPlan({ movie }) {
       const updatedOccupiedSeats = [...orderSeats, ...occupiedSeats];
 
       const order = {
-        orderId: Math.floor(Math.random() * 1000000),
-        customerID: Math.floor(Math.random() * 1000000),
+        customerId: Math.floor(Math.random() * 1000000),
         orderDate: new Date().toISOString(),
         seats: [...orderSeats, ...occupiedSeats],
         seat: orderSeats,
@@ -58,15 +57,15 @@ function SeatPlan({ movie }) {
       };
 
       const myOrder = {
-        orderId: order.orderId,
-        customerID: order.customerID,
+        customerId: order.customerId,
         orderDate: order.orderDate,
-        seat: order.seat,
+        movieId: order.movie.id,
         movieTitle: order.movie.title,
         movieGenres: order.movie.genres,
         movieRuntime: order.movie.runtime,
         movieLanguage: order.movie.language,
         moviePrice: order.movie.price,
+        seat: order.seat,
       };
 
       console.log('Buying tickets:', myOrder);
