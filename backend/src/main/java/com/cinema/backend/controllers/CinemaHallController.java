@@ -1,5 +1,6 @@
 package com.cinema.backend.controllers;
 
+import com.cinema.backend.dto.CinemaHallUpdateDTO;
 import com.cinema.backend.models.CinemaHall;
 import com.cinema.backend.repositories.CinemaHallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,23 @@ public class CinemaHallController {
         }
     }
 
-    @PostMapping("/api/v1/updateOccupiedSeatsInTheHall")
-    public ResponseEntity<?> newHallSeating(@RequestBody CinemaHall newCinemaHall) {
-        cinemaHallRepository.save(newCinemaHall);
-        return ResponseEntity.ok().body(Map.of("success", true));
+    @PutMapping("/api/v1/movie/{movieId}")
+    public ResponseEntity<?> updateOccupiedSeats(@PathVariable Long movieId, @RequestBody CinemaHallUpdateDTO updateDTO) {
+        try {
+            CinemaHall cinemaHall = cinemaHallRepository.findByMovieId(movieId)
+                    .orElse(new CinemaHall());
+
+            cinemaHall.setMovieId(movieId);
+            cinemaHall.setMovieSession(updateDTO.getMovieSession());
+            cinemaHall.setUpdatedSeats(updateDTO.getUpdatedSeats());
+
+            cinemaHallRepository.save(cinemaHall);
+
+            return ResponseEntity.ok().body(Map.of("message", "Cinema hall updated successfully"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
+        }
     }
+
 }
