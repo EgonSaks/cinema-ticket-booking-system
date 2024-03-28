@@ -18,6 +18,8 @@ function SeatPlan({ movie }) {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [successPopupVisible, setSuccessPopupVisible] = useState(false); 
+
   const [seatPlan, setSeatPlan] = useState(null);
 
   useEffect(() => {
@@ -96,7 +98,10 @@ function SeatPlan({ movie }) {
       if (updateSuccess) {
         const buyTickets = await BuyTickets(BASE_URL, myOrder);
         if (buyTickets) {
-          return true;
+          setSuccessPopupVisible(true); 
+          setTimeout(() => {
+            setSuccessPopupVisible(false);
+          }, 2000);
         }
       } else {
         console.error('Failed to update occupied seats in the database');
@@ -173,6 +178,12 @@ function SeatPlan({ movie }) {
         {popupVisible && (
           <div className='bg-red-500 text-white px-4 py-2 text-sm md:text-sm lg:text-base rounded absolute bottom-44 mb-8 mr-8'>
             Please select a seat before you could continue
+          </div>
+        )}
+
+        {successPopupVisible && ( 
+          <div className='bg-green-500 text-white px-4 py-2 text-sm md:text-sm lg:text-base rounded absolute bottom-44 mb-8 mr-8'>
+            Order Successful
           </div>
         )}
       </div>
