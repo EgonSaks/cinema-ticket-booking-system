@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BuyTickets from '../API/BuyTickets';
+import getSeatPlan from '../API/GetSeatPlan';
 import updateOccupiedSeatsInTheHall from '../API/UpdateOccupiedSeats';
 import generateRandomOccupiedSeats from '../utils/GenerateRandomOccupiedSeats';
 import SeatSelector from './SeatSelector';
@@ -17,6 +18,22 @@ function SeatPlan({ movie }) {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [seatPlan, setSeatPlan] = useState(null); 
+
+  useEffect(() => {
+    const fetchSeatPlan = async () => {
+      try {
+        const data = await getSeatPlan(movie.id); 
+        setSeatPlan(data); 
+      } catch (error) {
+        console.error('Error fetching seat plan:', error);
+      }
+    };
+
+    fetchSeatPlan();
+  }, [movie.id]); 
+
+  const occupiedSeats = seatPlan && seatPlan.length > 0 ? seatPlan : movies[0].occupied;
 
   let selectedSeatText = '';
   if (selectedSeats.length > 0) {
@@ -38,7 +55,6 @@ function SeatPlan({ movie }) {
       }, 2000);
     } else {
       const orderSeats = selectedSeats;
-      const occupiedSeats = movies[0].occupied;
       const updatedOccupiedSeats = [...orderSeats, ...occupiedSeats];
 
       const order = {
@@ -99,13 +115,11 @@ function SeatPlan({ movie }) {
       </div>
 
       <div className='CinemaPlan'>
-        <SeatSelector
-          movie={movies[0]}
-          selectedSeats={selectedSeats}
-          onSelectedSeatsChange={(selectedSeats) =>
-            setSelectedSeats(selectedSeats)
-          }
-        />
+      <SeatSelector
+        movie={{...movies[0], occupied: occupiedSeats}} 
+        selectedSeats={selectedSeats}
+        onSelectedSeatsChange={(selectedSeats) => setSelectedSeats(selectedSeats)}
+      />
 
         <SeatShowcase />
 
