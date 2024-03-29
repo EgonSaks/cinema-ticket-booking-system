@@ -17,8 +17,7 @@ const movies = [
 function SeatPlan({ movie }) {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [selectedSeats, setSelectedSeats] = useState([]);
-  const [popupVisible, setPopupVisible] = useState(false);
-  const [successPopupVisible, setSuccessPopupVisible] = useState(false); 
+  const [successPopupVisible, setSuccessPopupVisible] = useState(false);
 
   const [seatPlan, setSeatPlan] = useState(null);
 
@@ -51,12 +50,7 @@ function SeatPlan({ movie }) {
     e.preventDefault();
     const isAnySeatSelected = selectedSeats.length > 0;
 
-    if (!isAnySeatSelected) {
-      setPopupVisible(true);
-      setTimeout(() => {
-        setPopupVisible(false);
-      }, 2000);
-    } else {
+    if (isAnySeatSelected) {
       const orderSeats = selectedSeats;
       const updatedOccupiedSeats = [...orderSeats, ...occupiedSeats];
 
@@ -98,7 +92,7 @@ function SeatPlan({ movie }) {
       if (updateSuccess) {
         const buyTickets = await BuyTickets(BASE_URL, myOrder);
         if (buyTickets) {
-          setSuccessPopupVisible(true); 
+          setSuccessPopupVisible(true);
           setTimeout(() => {
             setSuccessPopupVisible(false);
           }, 2000);
@@ -151,37 +145,22 @@ function SeatPlan({ movie }) {
 
         {isAnySeatSelected ? (
           <div>
-            <button className='bg-red-500 hover:bg-red-700 text-white rounded px-3 py-2 text-sm font-semibold mr-2 mb-4 mt-4 cursor-pointer'>
-              Log in for discount!
-            </button>
-            <p className='text-xs'>Don't want discounts?</p>
-            <a
-              className='text-red-500 rounded px-3 text-sm mr-2 mb-2 cursor-pointer'
+            <button
+              className='bg-red-500 hover:bg-red-700 text-white rounded px-3 py-2 text-sm font-semibold mr-2 mb-4 mt-4 cursor-pointer'
               onClick={handleButtonClick}
             >
-              Buy without logging in at{' '}
-              <span className='total font-semibold'>{totalPrice}€</span>
-            </a>
+              Buy at <span className='total font-semibold'>{totalPrice}€</span>
+            </button>
           </div>
         ) : (
           <div>
-            <button
-              className='bg-gray-400 text-white rounded px-3 py-2 text-sm font-semibold mr-2 mb-4 mt-4 cursor-not-allowed'
-              onClick={handleButtonClick}
-            >
-              Log in for discount
-            </button>
-            <p className='text-xs'>Don't want discounts?</p>
+            <p className='info mb-2 text-sm md:text-sm lg:text-base'>
+              Please select a seat
+            </p>
           </div>
         )}
 
-        {popupVisible && (
-          <div className='bg-red-500 text-white px-4 py-2 text-sm md:text-sm lg:text-base rounded absolute bottom-44 mb-8 mr-8'>
-            Please select a seat before you could continue
-          </div>
-        )}
-
-        {successPopupVisible && ( 
+        {successPopupVisible && (
           <div className='bg-green-500 text-white px-4 py-2 text-sm md:text-sm lg:text-base rounded absolute bottom-44 mb-8 mr-8'>
             Order Successful
           </div>

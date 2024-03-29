@@ -53,7 +53,7 @@ function NavBar({ onSearch }) {
         <div className='flex-grow lg:flex lg:justify-end items-center'>
           <Search onSearch={onSearch} />
         </div>
-        <div className='flex flex-col lg:flex-row justify-center items-center mr-5'>
+        {/* <div className='flex flex-col lg:flex-row justify-center items-center mr-5'>
           <div className='lg:flex lg:justify-center min-[200px]:space-x-8 sm:space-x-8 lg:space-x-4'>
             <button
               className={`bg-white text-red-500 hover:text-white hover:bg-red-700 rounded px-3 py-1 text-sm font-semibold cursor-pointer h-9`}
@@ -68,7 +68,7 @@ function NavBar({ onSearch }) {
               Register
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
       {(showLoginForm || showRegistrationForm) && (
         <div className='fixed inset-0 flex justify-center items-center z-50 bg-gray-900 bg-opacity-50'>
