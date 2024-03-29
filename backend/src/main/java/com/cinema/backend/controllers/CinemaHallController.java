@@ -22,7 +22,6 @@ public class CinemaHallController {
         Optional<CinemaHall> cinemaHallOptional = cinemaHallRepository.findByMovieId(movieId);
         if (cinemaHallOptional.isPresent()) {
             CinemaHall cinemaHall = cinemaHallOptional.get();
-            System.out.println(cinemaHall);
             return ResponseEntity.ok().body(cinemaHall.getUpdatedSeats());
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Cinema hall for movie ID " + movieId + " not found"));
