@@ -139,6 +139,10 @@ code {
   background: #FF3A1E;
 }
 
+.seat.recommended {
+  background: #A020F0;
+}
+
 .info .count {
   color: #2ECC71;
 }

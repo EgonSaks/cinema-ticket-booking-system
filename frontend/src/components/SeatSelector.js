@@ -1,11 +1,17 @@
-import clsx from 'clsx';
 import React from 'react';
 
 const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
 
-function SeatSelector({ movie, selectedSeats, onSelectedSeatsChange }) {
+function SeatSelector({
+  movie,
+  selectedSeats,
+  recommendedSeat,
+  onSelectedSeatsChange,
+  onRecommendedSeatChange,
+}) {
   function handleSelectedState(seat) {
     const isSelected = selectedSeats.includes(seat);
+
     if (isSelected) {
       onSelectedSeatsChange(
         selectedSeats.filter((selectedSeat) => selectedSeat !== seat),
@@ -13,6 +19,8 @@ function SeatSelector({ movie, selectedSeats, onSelectedSeatsChange }) {
     } else {
       onSelectedSeatsChange([...selectedSeats, seat]);
     }
+
+    onRecommendedSeatChange(null);
   }
 
   return (
@@ -23,15 +31,16 @@ function SeatSelector({ movie, selectedSeats, onSelectedSeatsChange }) {
         {seats.map((seat) => {
           const isSelected = selectedSeats.includes(seat);
           const isOccupied = movie.occupied.includes(seat);
+          const showRecommended =
+            selectedSeats.length === 0 && recommendedSeat === seat;
+
           return (
             <span
               tabIndex='0'
               key={seat}
-              className={clsx(
-                'seat',
-                isSelected && 'selected',
-                isOccupied && 'occupied',
-              )}
+              className={`seat ${isSelected ? 'selected' : ''} ${
+                isOccupied ? 'occupied' : ''
+              } ${showRecommended ? 'recommended' : ''}`}
               onClick={isOccupied ? null : () => handleSelectedState(seat)}
               onKeyPress={
                 isOccupied

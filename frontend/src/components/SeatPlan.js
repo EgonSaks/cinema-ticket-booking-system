@@ -18,6 +18,7 @@ function SeatPlan({ movie }) {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [successPopupVisible, setSuccessPopupVisible] = useState(false);
+  const [recommendedSeat, setRecommendedSeat] = useState(null);
 
   const [seatPlan, setSeatPlan] = useState(null);
 
@@ -36,6 +37,24 @@ function SeatPlan({ movie }) {
 
   const occupiedSeats =
     seatPlan && seatPlan.length > 0 ? seatPlan : movies[0].occupied;
+
+  const availableSeats = [27, 28, 29, 30, 35, 36, 37, 38, 43, 44, 45, 46];
+
+  const filteredAvailableSeats = availableSeats.filter(
+    (seat) => !occupiedSeats.includes(seat),
+  );
+
+  useEffect(() => {
+    let recommended = null;
+    for (let i = 0; i < filteredAvailableSeats.length; i++) {
+      const seat = filteredAvailableSeats[i];
+      if (!occupiedSeats.includes(seat)) {
+        recommended = seat;
+        break;
+      }
+    }
+    setRecommendedSeat(recommended);
+  }, [filteredAvailableSeats, occupiedSeats]);
 
   let selectedSeatText = '';
   if (selectedSeats.length > 0) {
@@ -115,11 +134,14 @@ function SeatPlan({ movie }) {
         <SeatSelector
           movie={{ ...movies[0], occupied: occupiedSeats }}
           selectedSeats={selectedSeats}
+          recommendedSeat={recommendedSeat}
           onSelectedSeatsChange={(selectedSeats) =>
             setSelectedSeats(selectedSeats)
           }
+          onRecommendedSeatChange={(recommendedSeat) =>
+            setRecommendedSeat(recommendedSeat)
+          }
         />
-
         <SeatShowcase />
 
         <p className='info mb-2 text-sm md:text-sm lg:text-base'>
