@@ -12,7 +12,7 @@ import java.util.Arrays;
 @Configuration
 public class WebConfig {
 
-    private static final long MAX_AGE = 3600L;
+    private static final Long MAX_AGE = 3600L;
 
     @Bean
     public CorsFilter corsFilter() {
