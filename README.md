@@ -70,7 +70,6 @@ mysql> FLUSH PRIVILEGES;
 
 4. **Change MySQL username and password as per your MySQL installation**
 
-
 	+ open `src/main/resources/application.properties` file.
 
 	+ change `spring.datasource.username` and `spring.datasource.password` properties as per your mysql installation
