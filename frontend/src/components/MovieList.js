@@ -12,22 +12,22 @@ const MovieList = ({ searchText }) => {
   const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN || '';
 
   useEffect(() => {
-    fetchMovies();
-  }, [page, genreIds, searchText]);
+    const fetchMovies = async () => {
+      const response = await FetchMoviesFromAPI(
+        ACCESS_TOKEN,
+        page,
+        genreIds,
+        searchText,
+      );
+      if (response) {
+        const { filteredMovies, totalPages } = response;
+        setMovies(filteredMovies);
+        setTotalPages(totalPages);
+      }
+    };
 
-  const fetchMovies = async () => {
-    const response = await FetchMoviesFromAPI(
-      ACCESS_TOKEN,
-      page,
-      genreIds,
-      searchText,
-    );
-    if (response) {
-      const { filteredMovies, totalPages } = response;
-      setMovies(filteredMovies);
-      setTotalPages(totalPages);
-    }
-  };
+    fetchMovies();
+  }, [page, genreIds, searchText, ACCESS_TOKEN]);
 
   const handleNextPage = () => {
     if (page < totalPages) {
@@ -46,7 +46,7 @@ const MovieList = ({ searchText }) => {
       <Genres setGenreIds={setGenreIds} />
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
         {movies.map((movie, index) => (
-          <MovieCard key={movie.id} movie={movie} hallNumber={index}/>
+          <MovieCard key={movie.id} movie={movie} hallNumber={index} />
         ))}
       </div>
       <div className='flex justify-center mt-4'>

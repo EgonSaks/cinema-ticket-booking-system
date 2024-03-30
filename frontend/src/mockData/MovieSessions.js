@@ -23,18 +23,17 @@ function getRandomOffset(hallNumber, seed) {
 
 function MovieSessions(movie, hallNumber) {
   const language = '🔊 ' + movie.original_language.toUpperCase();
-  const sessionStartTime = new Date('2024-01-01T09:00');
-  const sessionEndTime = new Date('2024-01-02T00:00');
+  const currentTime = new Date(); 
+  const sessionStartTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 9, 0, 0); 
+  const sessionEndTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate() + 1, 0, 0, 0); 
   const sessionDuration = 195;
   const movieSessions = [];
 
-  let currentTime = new Date(sessionStartTime);
-
   const seed = hallNumber * 100;
 
-  while (currentTime <= sessionEndTime) {
+  while (sessionStartTime <= sessionEndTime) {
     const offsetMinutes = getRandomOffset(hallNumber, seed);
-    const sessionTime = new Date(currentTime);
+    const sessionTime = new Date(sessionStartTime);
     sessionTime.setMinutes(sessionTime.getMinutes() + offsetMinutes);
 
     if (sessionTime <= sessionEndTime) {
@@ -47,7 +46,7 @@ function MovieSessions(movie, hallNumber) {
       });
     }
 
-    currentTime.setMinutes(currentTime.getMinutes() + sessionDuration);
+    sessionStartTime.setMinutes(sessionStartTime.getMinutes() + sessionDuration);
   }
 
   return movieSessions;
