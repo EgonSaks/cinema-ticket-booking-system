@@ -14,16 +14,16 @@ Cinema Ticket Booking System is a web application built with React and Java Spri
   - [Steps to Setup the Spring Boot Backend app](#steps-to-setup-the-spring-boot-backend-app)
   - [Steps to Setup the React Frontend app](#steps-to-setup-the-react-frontend-app)
 
-
 ## Features
 
 - **Movie Selection**: Browse through a wide selection of available movies.
 - **Movie Search**: Easily find movies by name using the search feature.
 - **Genre Filtering**: Filter movies based on genres for a more tailored browsing experience.
+- **Movie Sessions**: Choose the best time for you to watch a movie.
 - **Seat recommendation**: Recommended for optimal sound quality and viewing experience.  
 - **Seat Selection**: Choose your desired seats for the selected movie.
 - **Booking Management**: Efficiently book seats and store booking information in the database.
-- **Dynamic Seat Updates**: Real-time updates of seat availability based on new bookings.
+- **Dynamic Seat Updates**: Real-time updates of seat availability based on new bookings and movie sessions.
 
 ## Technologies
 
@@ -104,4 +104,3 @@ npm start
 ```
 
 The frontend application will be available at http://localhost:3000.
-

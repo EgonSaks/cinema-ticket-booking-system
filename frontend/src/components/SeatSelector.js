@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const seats = Array.from({ length: 8 * 8 }, (_, i) => i);
 
@@ -9,6 +9,15 @@ function SeatSelector({
   onSelectedSeatsChange,
   onRecommendedSeatChange,
 }) {
+  const [sessionTime, setSessionTime] = useState(null);
+
+  useEffect(() => {
+    const storedMovieSession = JSON.parse(localStorage.getItem('movieSession'));
+    if (storedMovieSession && storedMovieSession.time) {
+      setSessionTime(storedMovieSession.time);
+    }
+  }, []);
+
   function handleSelectedState(seat) {
     const isSelected = selectedSeats.includes(seat);
 
@@ -25,6 +34,7 @@ function SeatSelector({
 
   return (
     <div className='Cinema'>
+       {sessionTime && <p className='info mb-2 text-sm md:text-sm lg:text-base'>Session Time: {sessionTime}</p>}
       <div className='screen' />
 
       <div className='seats'>

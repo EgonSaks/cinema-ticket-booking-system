@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BuyTickets from '../API/BuyTickets';
 import getSeatPlan from '../API/GetSeatPlan';
 import updateSeatsInHall from '../API/UpdateSeatsInHall';
@@ -19,21 +20,34 @@ function SeatPlan({ movie }) {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [successPopupVisible, setSuccessPopupVisible] = useState(false);
   const [recommendedSeat, setRecommendedSeat] = useState(null);
+  const navigate = useNavigate();
+  const [movieSession, setMovieSession] = useState(null);
 
   const [seatPlan, setSeatPlan] = useState(null);
 
   useEffect(() => {
+    const storedMovieSession = JSON.parse(localStorage.getItem('movieSession'));
+    if (storedMovieSession) {
+      setMovieSession(storedMovieSession);
+    }
+  }, []);
+
+  useEffect(() => {
     const fetchSeatPlan = async () => {
       try {
-        const data = await getSeatPlan(movie.id);
-        setSeatPlan(data);
+        if (movieSession && movieSession.time) {
+          const data = await getSeatPlan(movie.id, movieSession);
+          setSeatPlan(data);
+        }
       } catch (error) {
         console.error('Error fetching seat plan:', error);
       }
     };
 
-    fetchSeatPlan();
-  }, [movie.id]);
+    if (movieSession) {
+      fetchSeatPlan();
+    }
+  }, [movie.id, movieSession]);
 
   const occupiedSeats =
     seatPlan && seatPlan.length > 0 ? seatPlan : movies[0].occupied;
@@ -102,7 +116,8 @@ function SeatPlan({ movie }) {
 
       const hallUpdate = {
         movieId: movie.id,
-        movieSession: new Date().toISOString(),
+        movieSession: movieSession.time,
+        orderTime: order.orderDate,
         updatedSeats: updatedOccupiedSeats,
       };
 
@@ -114,6 +129,7 @@ function SeatPlan({ movie }) {
           setSuccessPopupVisible(true);
           setTimeout(() => {
             setSuccessPopupVisible(false);
+            navigate('/');
           }, 2000);
         }
       } else {
@@ -168,7 +184,7 @@ function SeatPlan({ movie }) {
         {isAnySeatSelected ? (
           <div>
             <button
-              className='bg-red-500 hover:bg-red-700 text-white rounded px-3 py-2 text-sm font-semibold mr-2 mb-4 mt-4 cursor-pointer'
+              className='bg-green-500 hover:bg-green-700 text-white rounded px-3 py-2 text-sm font-semibold cursor-pointer'
               onClick={handleButtonClick}
             >
               Buy at <span className='total font-semibold'>{totalPrice}€</span>
@@ -176,14 +192,14 @@ function SeatPlan({ movie }) {
           </div>
         ) : (
           <div>
-            <p className='info mb-2 text-sm md:text-sm lg:text-base'>
+            <p className='info text-sm md:text-sm lg:text-base'>
               Please select a seat
             </p>
           </div>
         )}
 
         {successPopupVisible && (
-          <div className='bg-green-500 text-white px-4 py-2 text-sm md:text-sm lg:text-base rounded absolute bottom-44 mb-8 mr-8'>
+          <div className='bg-green-500 text-white px-4 py-2 text-sm md:text-sm lg:text-base rounded absolute bottom-52 mb-8 mr-8 flex justify-center'>
             Order Successful
           </div>
         )}

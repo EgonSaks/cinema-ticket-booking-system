@@ -1,7 +1,7 @@
-async function GetSeatPlan(movieId) {
+async function GetSeatPlan(movieId, movieSession = {}) {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/v1/movie/${movieId}`,
+      `http://localhost:8080/api/v1/movie/${movieId}/${movieSession.time}`,
       {
         method: 'GET',
         headers: {
@@ -16,6 +16,7 @@ async function GetSeatPlan(movieId) {
     }
 
     const data = await response.json();
+    console.log('Seat plan:', data);
     return data;
   } catch (error) {
     console.error(error);

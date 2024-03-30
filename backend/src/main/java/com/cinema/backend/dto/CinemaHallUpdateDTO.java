@@ -3,7 +3,8 @@ package com.cinema.backend.dto;
 import java.util.List;
 
 public class CinemaHallUpdateDTO {
-    private String movieSession;
+    public String movieSession;
+    private String orderTime;
     private List<Integer> updatedSeats;
 
     public String getMovieSession() {
@@ -12,6 +13,14 @@ public class CinemaHallUpdateDTO {
 
     public void setMovieSession(String movieSession) {
         this.movieSession = movieSession;
+    }
+
+    public String getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(String orderTime) {
+        this.orderTime = orderTime;
     }
 
     public List<Integer> getUpdatedSeats() {

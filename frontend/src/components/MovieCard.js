@@ -1,13 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import MovieSessions from '../mockData/MovieSessions';
 import FormatDate from '../utils/FormatDate';
+import SessionInfo from './SessionInfo';
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, hallNumber }) => {
+  const movieSessions = MovieSessions(movie, hallNumber);
   return (
-    <Link
-      to={{ pathname: `/movie/${movie.id}`, state: { movie } }}
-      className='bg-white shadow-md rounded-lg overflow-hidden flex'
-    >
+    <div className='bg-white shadow-md rounded-lg overflow-hidden flex'>
       <div className='relative w-1/2'>
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -21,6 +20,11 @@ const MovieCard = ({ movie }) => {
         </div>
         <div className='text-left text-sm'>
           <div>
+            <div>
+              <SessionInfo movieSessions={movieSessions} movieId={movie.id} />
+            </div>
+          </div>
+          <div>
             <span className='text-gray-500'>
               Release Date: {FormatDate(movie.release_date)}
             </span>
@@ -32,7 +36,7 @@ const MovieCard = ({ movie }) => {
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

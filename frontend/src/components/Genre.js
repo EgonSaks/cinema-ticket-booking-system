@@ -19,16 +19,17 @@ const Genres = ({ setGenreIds }) => {
     fetchData();
   }, [ACCESS_TOKEN]);
 
+  useEffect(() => {
+    const updatedGenreIds = clickedGenres
+      .map((clicked, index) => (clicked ? genres[index].id : null))
+      .filter((id) => id !== null);
+    setGenreIds(updatedGenreIds);
+  }, [clickedGenres, genres, setGenreIds]);
+
   const handleGenreClick = (index) => {
     setClickedGenres((prevClickedGenres) => {
       const newClickedGenres = [...prevClickedGenres];
       newClickedGenres[index] = !newClickedGenres[index];
-
-      const updatedGenreIds = newClickedGenres
-        .map((clicked, index) => (clicked ? genres[index].id : null))
-        .filter((id) => id !== null);
-      setGenreIds(updatedGenreIds);
-
       return newClickedGenres;
     });
   };

@@ -14,20 +14,22 @@ public class CinemaHall {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long movieId;
+
     private String movieSession;
+    private String orderTime;
     @ElementCollection
     private List<Integer> updatedSeats;
 
     public CinemaHall() {
     }
 
-    public CinemaHall(Long id, Long movieId, String movieSession, List<Integer> updatedSeats) {
+    public CinemaHall(Long id, Long movieId, String movieSession, String orderTime, List<Integer> updatedSeats) {
         this.id = id;
         this.movieId = movieId;
         this.movieSession = movieSession;
+        this.orderTime = orderTime;
         this.updatedSeats = updatedSeats;
     }
-
 
     public Long getId() {
         return id;
@@ -53,6 +55,14 @@ public class CinemaHall {
         this.movieSession = movieSession;
     }
 
+    public String getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(String orderTime) {
+        this.orderTime = orderTime;
+    }
+
     public List<Integer> getUpdatedSeats() {
         return updatedSeats;
     }
@@ -66,20 +76,21 @@ public class CinemaHall {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CinemaHall that = (CinemaHall) o;
-        return Objects.equals(id, that.id) && Objects.equals(movieId, that.movieId) && Objects.equals(movieSession, that.movieSession) && Objects.equals(updatedSeats, that.updatedSeats);
+        return Objects.equals(id, that.id) && Objects.equals(movieId, that.movieId) && Objects.equals(movieSession, that.movieSession) && Objects.equals(orderTime, that.orderTime) && Objects.equals(updatedSeats, that.updatedSeats);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, movieId, movieSession, updatedSeats);
+        return Objects.hash(id, movieId, movieSession, orderTime, updatedSeats);
     }
 
     @Override
     public String toString() {
-        return "HallSeating{" +
+        return "CinemaHall{" +
                 "id=" + id +
                 ", movieId=" + movieId +
                 ", movieSession='" + movieSession + '\'' +
+                ", orderTime='" + orderTime + '\'' +
                 ", updatedSeats=" + updatedSeats +
                 '}';
     }
