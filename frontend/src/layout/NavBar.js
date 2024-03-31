@@ -1,3 +1,5 @@
+// NavBar.js
+
 import React, { useEffect, useState } from 'react';
 import LoginForm from '../components/LoginForm';
 import RegistrationForm from '../components/RegistrationForm';
@@ -6,6 +8,17 @@ import Search from '../components/Search';
 function NavBar({ onSearch }) {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    const userNameCookie = document.cookie.replace(
+      /(?:(?:^|.*;\s*)userName\s*=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    );
+    if (userNameCookie) {
+      setUserName(userNameCookie);
+    }
+  }, []);
 
   const handleLoginButtonClick = () => {
     setShowLoginForm(true);
@@ -22,22 +35,11 @@ function NavBar({ onSearch }) {
     setShowRegistrationForm(false);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        (showLoginForm || showRegistrationForm) &&
-        !event.target.closest('.popup')
-      ) {
-        handleCloseForms();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [showLoginForm, showRegistrationForm]);
+  const handleLogout = () => {
+    document.cookie =
+      'userName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    setUserName('');
+  };
 
   return (
     <div>
@@ -55,18 +57,29 @@ function NavBar({ onSearch }) {
         </div>
         <div className='flex flex-col lg:flex-row justify-center items-center mr-5'>
           <div className='lg:flex lg:justify-center min-[200px]:space-x-8 sm:space-x-8 lg:space-x-4'>
-            <button
-              className={`bg-white text-red-500 hover:text-white hover:bg-red-700 rounded px-3 py-1 text-sm font-semibold cursor-pointer h-9`}
-              onClick={handleLoginButtonClick}
-            >
-              Login
-            </button>
-            <button
-              className={`bg-white text-red-500 hover:text-white hover:bg-red-700 rounded px-3 py-1 text-sm font-semibold cursor-pointer h-9`}
-              onClick={handleRegistrationButtonClick}
-            >
-              Register
-            </button>
+            {userName ? (
+              <button
+                className={`bg-white text-red-500 hover:text-white hover:bg-red-700 rounded px-3 py-1 text-sm font-semibold cursor-pointer h-9`}
+                onClick={handleLogout}
+              >
+                Logout {userName}
+              </button>
+            ) : (
+              <>
+                <button
+                  className={`bg-white text-red-500 hover:text-white hover:bg-red-700 rounded px-3 py-1 text-sm font-semibold cursor-pointer h-9`}
+                  onClick={handleLoginButtonClick}
+                >
+                  Login
+                </button>
+                <button
+                  className={`bg-white text-red-500 hover:text-white hover:bg-red-700 rounded px-3 py-1 text-sm font-semibold cursor-pointer h-9`}
+                  onClick={handleRegistrationButtonClick}
+                >
+                  Register
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

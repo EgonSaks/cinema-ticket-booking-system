@@ -14,6 +14,15 @@ async function Login(BASE_URL, email, password) {
 
     const userData = await response.json();
     console.log('User data from login', userData);
+
+    const expiryTime = new Date();
+    expiryTime.setTime(expiryTime.getTime() + 5 * 60 * 1000);
+
+    document.cookie = `userName=${
+      userData.userName
+    }; expires=${expiryTime.toUTCString()}; path=/; SameSite=None; Secure`;
+
+    return userData;
   } catch (error) {
     console.error(error);
   }
