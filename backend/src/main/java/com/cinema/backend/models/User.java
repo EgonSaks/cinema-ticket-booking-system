@@ -28,6 +28,9 @@ public class User {
         this.password = password;
     }
 
+    public User(String username, String encodedPassword) {
+    }
+
     public Long getId() {
         return id;
     }
