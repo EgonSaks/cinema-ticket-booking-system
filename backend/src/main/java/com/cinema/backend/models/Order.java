@@ -15,6 +15,8 @@ public class Order {
     private Long orderId;
 
     private Long customerId;
+
+    private String userName;
     private String orderDate;
     private Long movieId;
     private String movieTitle;
@@ -28,9 +30,10 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long orderId, Long customerId, String orderDate, Long movieId, String movieTitle, String movieGenres, String movieLanguage, double moviePrice, int movieRuntime, List<Integer> seat) {
+    public Order(Long orderId, Long customerId, String userName, String orderDate, Long movieId, String movieTitle, String movieGenres, String movieLanguage, double moviePrice, int movieRuntime, List<Integer> seat) {
         this.orderId = orderId;
         this.customerId = customerId;
+        this.userName = userName;
         this.orderDate = orderDate;
         this.movieId = movieId;
         this.movieTitle = movieTitle;
@@ -55,6 +58,14 @@ public class Order {
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getOrderDate() {
@@ -126,12 +137,12 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Double.compare(moviePrice, order.moviePrice) == 0 && movieRuntime == order.movieRuntime && Objects.equals(orderId, order.orderId) && Objects.equals(customerId, order.customerId) && Objects.equals(orderDate, order.orderDate) && Objects.equals(movieId, order.movieId) && Objects.equals(movieTitle, order.movieTitle) && Objects.equals(movieGenres, order.movieGenres) && Objects.equals(movieLanguage, order.movieLanguage) && Objects.equals(seat, order.seat);
+        return Double.compare(moviePrice, order.moviePrice) == 0 && movieRuntime == order.movieRuntime && Objects.equals(orderId, order.orderId) && Objects.equals(customerId, order.customerId) && Objects.equals(userName, order.userName) && Objects.equals(orderDate, order.orderDate) && Objects.equals(movieId, order.movieId) && Objects.equals(movieTitle, order.movieTitle) && Objects.equals(movieGenres, order.movieGenres) && Objects.equals(movieLanguage, order.movieLanguage) && Objects.equals(seat, order.seat);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, customerId, orderDate, movieId, movieTitle, movieGenres, movieLanguage, moviePrice, movieRuntime, seat);
+        return Objects.hash(orderId, customerId, userName, orderDate, movieId, movieTitle, movieGenres, movieLanguage, moviePrice, movieRuntime, seat);
     }
 
     @Override
@@ -139,6 +150,7 @@ public class Order {
         return "Order{" +
                 "orderId=" + orderId +
                 ", customerId=" + customerId +
+                ", userName='" + userName + '\'' +
                 ", orderDate='" + orderDate + '\'' +
                 ", movieId=" + movieId +
                 ", movieTitle='" + movieTitle + '\'' +

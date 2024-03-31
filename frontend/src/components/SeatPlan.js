@@ -22,6 +22,8 @@ function SeatPlan({ movie }) {
   const [recommendedSeat, setRecommendedSeat] = useState(null);
   const navigate = useNavigate();
   const [movieSession, setMovieSession] = useState(null);
+  const [userName, setUserName] = useState('');
+  const [userId, setUserId] = useState('');
 
   const [seatPlan, setSeatPlan] = useState(null);
 
@@ -88,7 +90,8 @@ function SeatPlan({ movie }) {
       const updatedOccupiedSeats = [...orderSeats, ...occupiedSeats];
 
       const order = {
-        customerId: Math.floor(Math.random() * 1000000),
+        customerId: userId || Math.floor(Math.random() * 1000000),
+        userName: userName || '',
         orderDate: new Date().toISOString(),
         seats: [...orderSeats, ...occupiedSeats],
         seat: orderSeats,
@@ -112,6 +115,7 @@ function SeatPlan({ movie }) {
         movieLanguage: order.movie.language,
         moviePrice: order.movie.price,
         seat: order.seat,
+        userName: order.userName,
       };
 
       const hallUpdate = {
