@@ -23,4 +23,12 @@ public class UserService {
         newUser.setPassword(encodedPassword);
         return userRepository.save(newUser);
     }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public boolean isPasswordMatch(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
 }

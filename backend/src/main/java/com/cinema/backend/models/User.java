@@ -17,6 +17,12 @@ public class User {
     private String email;
     private String password;
 
+    @Transient
+    private String loginEmail;
+
+    @Transient
+    private String loginPassword;
+
     public User() {
     }
 
@@ -71,6 +77,22 @@ public class User {
         this.password = password;
     }
 
+    public String getLoginEmail() {
+        return loginEmail;
+    }
+
+    public void setLoginEmail(String loginEmail) {
+        this.loginEmail = loginEmail;
+    }
+
+    public String getLoginPassword() {
+        return loginPassword;
+    }
+
+    public void setLoginPassword(String loginPassword) {
+        this.loginPassword = loginPassword;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -94,4 +116,6 @@ public class User {
     public int hashCode() {
         return Objects.hash(id, name, surname, email, password);
     }
+
+
 }

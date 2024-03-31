@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import Login from '../API/Login';
 
 function LoginForm({ onClose }) {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -14,13 +16,19 @@ function LoginForm({ onClose }) {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    setFormData({
-      email: '',
-      password: '',
-    });
+    try {
+      await Login(BASE_URL, formData.email, formData.password);
+      setFormData({
+        email: '',
+        password: '',
+      });
+      onClose();
+    } catch (error) {
+      console.error(error);
+      // Handle error, show error message to the user, etc.
+    }
   };
 
   return (

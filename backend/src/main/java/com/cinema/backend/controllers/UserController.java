@@ -1,8 +1,11 @@
 package com.cinema.backend.controllers;
 
+import com.cinema.backend.dto.LoginResponseDTO;
 import com.cinema.backend.models.User;
 import com.cinema.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,5 +19,27 @@ public class UserController {
     @PostMapping("/api/v1/register")
     User newUser(@RequestBody User newUser) {
         return userService.registerUser(newUser);
+    }
+
+    @PostMapping("/api/v1/login")
+    public ResponseEntity<LoginResponseDTO>
+    loginUser(@RequestBody User loginRequest) {
+        // Retrieve user by email
+        User user = userService.getUserByEmail(loginRequest.getEmail());
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new LoginResponseDTO("Invalid credentials", null));
+        }
+
+        if (userService.isPasswordMatch(loginRequest.getPassword(),
+                user.getPassword())) {
+            LoginResponseDTO response =
+                    new LoginResponseDTO("Login successful", user.getName());
+            return ResponseEntity.ok().body(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new LoginResponseDTO("Invalid credentials", null));
+        }
     }
 }
