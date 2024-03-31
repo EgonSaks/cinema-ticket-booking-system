@@ -22,24 +22,20 @@ public class UserController {
     }
 
     @PostMapping("/api/v1/login")
-    public ResponseEntity<LoginResponseDTO>
-    loginUser(@RequestBody User loginRequest) {
-        // Retrieve user by email
+    public ResponseEntity<LoginResponseDTO> loginUser(@RequestBody User loginRequest) {
         User user = userService.getUserByEmail(loginRequest.getEmail());
 
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new LoginResponseDTO("Invalid credentials", null));
+                    .body(new LoginResponseDTO("Invalid credentials", null, null));
         }
 
-        if (userService.isPasswordMatch(loginRequest.getPassword(),
-                user.getPassword())) {
-            LoginResponseDTO response =
-                    new LoginResponseDTO("Login successful", user.getName());
+        if (userService.isPasswordMatch(loginRequest.getPassword(), user.getPassword())) {
+            LoginResponseDTO response = new LoginResponseDTO("Login successful", user.getName(), user.getId());
             return ResponseEntity.ok().body(response);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new LoginResponseDTO("Invalid credentials", null));
+                    .body(new LoginResponseDTO("Invalid credentials", null, null));
         }
     }
 }

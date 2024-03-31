@@ -27,7 +27,6 @@ function LoginForm({ onClose }) {
       onClose();
     } catch (error) {
       console.error(error);
-      // Handle error, show error message to the user, etc.
     }
   };
 

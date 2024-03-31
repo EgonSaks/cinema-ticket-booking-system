@@ -1,17 +1,15 @@
 package com.cinema.backend.dto;
 
-import java.util.Objects;
-
 public class LoginResponseDTO {
+
     private String message;
     private String userName;
+    private Long userId;
 
-    public LoginResponseDTO() {
-    }
-
-    public LoginResponseDTO(String message, String userName) {
+    public LoginResponseDTO(String message, String userName, Long userId) {
         this.message = message;
         this.userName = userName;
+        this.userId = userId;
     }
 
     public String getMessage() {
@@ -30,24 +28,11 @@ public class LoginResponseDTO {
         this.userName = userName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LoginResponseDTO that = (LoginResponseDTO) o;
-        return Objects.equals(message, that.message) && Objects.equals(userName, that.userName);
+    public Long getUserId() {
+        return userId;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(message, userName);
-    }
-
-    @Override
-    public String toString() {
-        return "LoginResponse{" +
-                "message='" + message + '\'' +
-                ", userName='" + userName + '\'' +
-                '}';
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

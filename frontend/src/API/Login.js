@@ -22,6 +22,7 @@ async function Login(BASE_URL, email, password) {
       userData.userName
     }; expires=${expiryTime.toUTCString()}; path=/; SameSite=None; Secure`;
 
+    console.log('User data from login', userData);
     return userData;
   } catch (error) {
     console.error(error);
