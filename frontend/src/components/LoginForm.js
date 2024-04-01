@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Login from '../API/Login';
 
 function LoginForm({ onClose, onLogin }) {
@@ -7,6 +7,20 @@ function LoginForm({ onClose, onLogin }) {
     email: '',
     password: '',
   });
+  const formRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (formRef.current && !formRef.current.contains(event.target)) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +51,7 @@ function LoginForm({ onClose, onLogin }) {
   };
 
   return (
-    <div className='container mx-auto mt-5'>
+    <div className='container mx-auto mt-5' ref={formRef}>
       <form onSubmit={handleSubmit} className='max-w-sm mx-auto'>
         <div className='mb-4'>
           <label
