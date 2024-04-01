@@ -51,6 +51,14 @@ function SeatPlan({ movie }) {
     }
   }, [movie.id, movieSession]);
 
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+      setUserName(storedUser.userName);
+      setUserId(storedUser.userId);
+    }
+  }, []);
+
   const occupiedSeats =
     seatPlan && seatPlan.length > 0 ? seatPlan : movies[0].occupied;
 

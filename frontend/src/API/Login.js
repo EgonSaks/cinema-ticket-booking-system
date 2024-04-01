@@ -13,7 +13,6 @@ async function Login(BASE_URL, email, password) {
     }
 
     const userData = await response.json();
-    console.log('User data from login', userData);
 
     const expiryTime = new Date();
     expiryTime.setTime(expiryTime.getTime() + 5 * 60 * 1000);
@@ -22,7 +21,6 @@ async function Login(BASE_URL, email, password) {
       userData.userName
     }; expires=${expiryTime.toUTCString()}; path=/; SameSite=None; Secure`;
 
-    console.log('User data from login', userData);
     return userData;
   } catch (error) {
     console.error(error);

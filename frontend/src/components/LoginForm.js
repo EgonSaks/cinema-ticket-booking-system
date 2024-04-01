@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Login from '../API/Login';
 
-function LoginForm({ onClose }) {
+function LoginForm({ onClose, onLogin }) {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [formData, setFormData] = useState({
     email: '',
@@ -19,12 +19,18 @@ function LoginForm({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await Login(BASE_URL, formData.email, formData.password);
-      setFormData({
-        email: '',
-        password: '',
-      });
-      onClose();
+      const userData = await Login(BASE_URL, formData.email, formData.password);
+
+      if (userData) {
+        setFormData({
+          email: '',
+          password: '',
+        });
+        onClose();
+        onLogin(userData);
+      } else {
+        console.error('Login was unsuccessful.');
+      }
     } catch (error) {
       console.error(error);
     }

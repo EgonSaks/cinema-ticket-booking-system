@@ -2,42 +2,33 @@ import React, { useEffect, useState } from 'react';
 import LoginForm from '../components/LoginForm';
 import RegistrationForm from '../components/RegistrationForm';
 import Search from '../components/Search';
+import { isLoggedIn, login, logout } from '../utils/Auth';
 
 function NavBar({ onSearch }) {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
-  const [userName, setUserName] = useState('');
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const userNameCookie = document.cookie.replace(
-      /(?:(?:^|.*;\s*)userName\s*=\s*([^;]*).*$)|^.*$/,
-      '$1',
-    );
-    if (userNameCookie) {
-      setUserName(userNameCookie);
+    const loggedInUser = isLoggedIn();
+    if (loggedInUser) {
+      setUser(loggedInUser);
     }
   }, []);
 
-  const handleLoginButtonClick = () => {
-    setShowLoginForm(true);
-    setShowRegistrationForm(false);
-  };
-
-  const handleRegistrationButtonClick = () => {
-    setShowRegistrationForm(true);
-    setShowLoginForm(false);
-  };
-
-  const handleCloseForms = () => {
+  const handleLogin = (userData) => {
+    login(userData);
+    setUser(userData);
     setShowLoginForm(false);
     setShowRegistrationForm(false);
   };
 
   const handleLogout = () => {
-    document.cookie =
-      'userName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    setUserName('');
+    logout();
+    setUser(null);
   };
+
+  console.log(user);
 
   return (
     <div>
@@ -55,24 +46,24 @@ function NavBar({ onSearch }) {
         </div>
         <div className='flex flex-col lg:flex-row justify-center items-center mr-5'>
           <div className='lg:flex lg:justify-center min-[200px]:space-x-8 sm:space-x-8 lg:space-x-4'>
-            {userName ? (
+            {user ? (
               <button
                 className={`bg-white text-red-500 hover:text-white hover:bg-red-700 rounded px-3 py-1 text-sm font-semibold cursor-pointer h-9`}
                 onClick={handleLogout}
               >
-                Logout {userName}
+                Logout
               </button>
             ) : (
               <>
                 <button
                   className={`bg-white text-red-500 hover:text-white hover:bg-red-700 rounded px-3 py-1 text-sm font-semibold cursor-pointer h-9`}
-                  onClick={handleLoginButtonClick}
+                  onClick={() => setShowLoginForm(true)}
                 >
                   Login
                 </button>
                 <button
                   className={`bg-white text-red-500 hover:text-white hover:bg-red-700 rounded px-3 py-1 text-sm font-semibold cursor-pointer h-9`}
-                  onClick={handleRegistrationButtonClick}
+                  onClick={() => setShowRegistrationForm(true)}
                 >
                   Register
                 </button>
@@ -84,9 +75,16 @@ function NavBar({ onSearch }) {
       {(showLoginForm || showRegistrationForm) && (
         <div className='fixed inset-0 flex justify-center items-center z-50 bg-gray-900 bg-opacity-50'>
           <div className='bg-white p-6 rounded-lg popup'>
-            {showLoginForm && <LoginForm onClose={handleCloseForms} />}
+            {showLoginForm && (
+              <LoginForm
+                onClose={() => setShowLoginForm(false)}
+                onLogin={handleLogin}
+              />
+            )}
             {showRegistrationForm && (
-              <RegistrationForm onClose={handleCloseForms} />
+              <RegistrationForm
+                onClose={() => setShowRegistrationForm(false)}
+              />
             )}
           </div>
         </div>
