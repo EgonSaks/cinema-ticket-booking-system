@@ -28,8 +28,6 @@ function NavBar({ onSearch }) {
     setUser(null);
   };
 
-  console.log(user);
-
   return (
     <div>
       <div className='navbar flex flex-col lg:flex-row container mx-auto py-4 bg-red-500 rounded relative z-10'>

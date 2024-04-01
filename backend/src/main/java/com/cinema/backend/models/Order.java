@@ -2,6 +2,7 @@ package com.cinema.backend.models;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,6 +15,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Date createdAt;
     private Long customerId;
 
     private String userName;
@@ -130,6 +134,11 @@ public class Order {
 
     public void setSeat(List<Integer> seat) {
         this.seat = seat;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
     }
 
     @Override
