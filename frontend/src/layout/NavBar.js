@@ -1,31 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import LoginForm from '../components/LoginForm';
 import RegistrationForm from '../components/RegistrationForm';
 import Search from '../components/Search';
-import { isLoggedIn, login, logout } from '../utils/Auth';
+import { logout } from '../utils/Auth';
 
-function NavBar({ onSearch }) {
+function NavBar({ user, onSearch, onLogin, onLogout }) {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const loggedInUser = isLoggedIn();
-    if (loggedInUser) {
-      setUser(loggedInUser);
-    }
-  }, []);
-
-  const handleLogin = (userData) => {
-    login(userData);
-    setUser(userData);
-    setShowLoginForm(false);
-    setShowRegistrationForm(false);
-  };
 
   const handleLogout = () => {
     logout();
-    setUser(null);
+    onLogout();
   };
 
   return (
@@ -76,7 +61,7 @@ function NavBar({ onSearch }) {
             {showLoginForm && (
               <LoginForm
                 onClose={() => setShowLoginForm(false)}
-                onLogin={handleLogin}
+                onLogin={onLogin}
               />
             )}
             {showRegistrationForm && (
