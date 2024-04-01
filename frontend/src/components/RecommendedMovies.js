@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import FetchMoviesFromAPI from '../API/GetMovies';
+import FetchMoviesByGenre from '../API/FetchMoviesByGenre';
 import GetRecommendedMovies from '../API/GetRecommendedMovies';
 import { isLoggedIn } from '../utils/Auth';
 import RecommendedMovieCard from './RecommendedMovieCard';
@@ -34,36 +34,25 @@ const RecommendedMovies = () => {
 
   const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN || '';
 
-  const searchText = '';
-
   useEffect(() => {
-    const fetchMovies = async () => {
-      const response = await FetchMoviesFromAPI(
-        ACCESS_TOKEN,
-        page,
-        genreIds,
-        searchText,
-      );
-      if (response) {
-        const { filteredMovies, totalPages } = response;
-        setMovies(filteredMovies);
-        setTotalPages(totalPages);
+    const fetchMoviesByGenre = async () => {
+      if (genreIds.length > 0) {
+        const response = await FetchMoviesByGenre(ACCESS_TOKEN, page, genreIds);
+        if (response) {
+          const { filteredMovies, totalPages } = response;
+          setMovies(filteredMovies);
+          setTotalPages(totalPages);
+        }
       }
     };
 
-    fetchMovies();
-  }, [page, genreIds, searchText, ACCESS_TOKEN]);
+    fetchMoviesByGenre();
+  }, [page, genreIds, ACCESS_TOKEN]);
 
   useEffect(() => {
     const fetchRecommendedMovies = async () => {
       if (userId) {
-        console.log('User ID:', userId);
         const recommendedMoviesData = await GetRecommendedMovies(userId);
-        console.log(
-          'Recommended Movies:',
-          recommendedMoviesData ? recommendedMoviesData.movieGenres : null,
-        );
-
         if (
           recommendedMoviesData &&
           recommendedMoviesData.movieGenres.length > 0
@@ -74,8 +63,6 @@ const RecommendedMovies = () => {
           const recommendedGenreIds = recommendedGenres.map(
             (genre) => genres[genre],
           );
-          console.log('Recommended Genre IDs:', recommendedGenreIds);
-
           setRecommendedMovies(recommendedMoviesData);
           setGenreIds(recommendedGenreIds);
         }

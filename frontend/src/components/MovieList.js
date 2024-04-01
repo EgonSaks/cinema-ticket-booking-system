@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import FetchMoviesFromAPI from '../API/GetMovies';
+import FetchMoviesByGenre from '../API/FetchMoviesByGenre';
+import FetchMoviesBySearch from '../API/FetchMoviesBySearch';
 import { isLoggedIn } from '../utils/Auth';
 import Genres from './Genre';
 import MovieCard from './MovieCard';
@@ -15,21 +16,34 @@ const MovieList = ({ searchText }) => {
   const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN || '';
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      const response = await FetchMoviesFromAPI(
-        ACCESS_TOKEN,
-        page,
-        genreIds,
-        searchText,
-      );
-      if (response) {
-        const { filteredMovies, totalPages } = response;
-        setMovies(filteredMovies);
-        setTotalPages(totalPages);
+    const fetchMoviesBySearch = async () => {
+      if (searchText) {
+        const response = await FetchMoviesBySearch(
+          ACCESS_TOKEN,
+          page,
+          searchText,
+        );
+        if (response) {
+          const { filteredMovies, totalPages } = response;
+          setMovies(filteredMovies);
+          setTotalPages(totalPages);
+        }
       }
     };
 
-    fetchMovies();
+    const fetchMoviesByGenre = async () => {
+      if (!searchText) {
+        const response = await FetchMoviesByGenre(ACCESS_TOKEN, page, genreIds);
+        if (response) {
+          const { filteredMovies, totalPages } = response;
+          setMovies(filteredMovies);
+          setTotalPages(totalPages);
+        }
+      }
+    };
+
+    fetchMoviesBySearch();
+    fetchMoviesByGenre();
   }, [page, genreIds, searchText, ACCESS_TOKEN]);
 
   const handleNextPage = () => {
