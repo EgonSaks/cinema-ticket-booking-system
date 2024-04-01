@@ -16,6 +16,7 @@ Cinema Ticket Booking System is a web application built with React and Java Spri
 
 ## Features
 
+- **User registration**: For personalization and access to exclusive deals.
 - **Movie Selection**: Browse through a wide selection of available movies.
 - **Movie Search**: Easily find movies by name using the search feature.
 - **Genre Filtering**: Filter movies based on genres for a more tailored browsing experience.
@@ -24,6 +25,7 @@ Cinema Ticket Booking System is a web application built with React and Java Spri
 - **Seat Selection**: Choose your desired seats for the selected movie.
 - **Booking Management**: Efficiently book seats and store booking information in the database.
 - **Dynamic Seat Updates**: Real-time updates of seat availability based on new bookings and movie sessions.
+- **Movie recommendations**: Movie recommendations for registered users based on their past viewing history and preferences.
 
 ## Technologies
 

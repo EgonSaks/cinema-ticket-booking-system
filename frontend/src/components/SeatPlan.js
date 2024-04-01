@@ -211,7 +211,7 @@ function SeatPlan({ movie }) {
         )}
 
         {successPopupVisible && (
-          <div className='bg-green-500 text-white px-4 py-2 text-sm md:text-sm lg:text-base rounded absolute bottom-52 mb-8 mr-8 flex justify-center'>
+          <div className='bg-green-500 text-white px-4 py-2 text-sm md:text-sm lg:text-base rounded absolute bottom-1/2 mb-8 mr-8 flex justify-center'>
             Order Successful
           </div>
         )}
