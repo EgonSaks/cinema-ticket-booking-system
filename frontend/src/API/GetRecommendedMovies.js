@@ -1,5 +1,4 @@
 async function GetRecommendedMovies(userId) {
-  console.log('User ID:', userId);
   try {
     const response = await fetch(`http://localhost:8080/api/v1/order/${userId}`, {
       method: 'GET',
@@ -14,7 +13,6 @@ async function GetRecommendedMovies(userId) {
     }
 
     const data = await response.json();
-    console.log('User data:', data);
     return data;
   } catch (error) {
     console.error(error);

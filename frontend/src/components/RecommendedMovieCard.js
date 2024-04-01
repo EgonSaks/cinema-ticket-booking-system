@@ -7,7 +7,7 @@ const RecommendedMovieCard = ({ movie, hallNumber }) => {
   const movieSessions = MovieSessions(movie, hallNumber);
   return (
     <div className='bg-white shadow-md rounded-lg overflow-hidden flex'>
-      <div className='relative w-1/2'>
+      <div className='relative w-1/2 h-72'>
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}

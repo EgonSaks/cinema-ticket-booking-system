@@ -6,7 +6,7 @@ import SessionInfo from './SessionInfo';
 const MovieCard = ({ movie, hallNumber }) => {
   const movieSessions = MovieSessions(movie, hallNumber);
   return (
-    <div className='bg-white shadow-md rounded-lg overflow-hidden flex'>
+    <div className='bg-white shadow-md rounded-lg overflow-hidden flex h-96'>
       <div className='relative w-1/2'>
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
